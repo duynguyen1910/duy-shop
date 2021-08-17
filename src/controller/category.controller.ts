@@ -1,7 +1,5 @@
 import * as CategoryService from "../service/category.service";
 import { Request, Response } from "express";
-import { AsyncLocalStorage } from "node:async_hooks";
-import { rmdirSync } from "fs";
 
 export async function getAllCategory(req: Request, res: Response) {
   try {

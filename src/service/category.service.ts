@@ -14,7 +14,7 @@ export async function getCategoryByPaginate(page: number, perPage: number) {
   const total = await Category.count();
   const categories = await Category.find()
     .limit(perPage)
-    .skip(perPage * page);
+    .skip(perPage * (page - 1));
   return {
     data: categories,
     total: total,
@@ -25,6 +25,7 @@ export function addCategory(categoryInfo: CategoryType) {
   const category = new Category({
     name: categoryInfo.name,
     description: categoryInfo.description,
+    icon: categoryInfo.icon
   });
   return category.save();
 }
@@ -38,6 +39,6 @@ export async function updateCategory(
   return undefined;
 }
 
-export function deleteCategory(CategoryId: string) {
-  return Category.findByIdAndDelete(CategoryId);
+export function deleteCategory(categoryId: string) {
+  return Category.findByIdAndDelete(categoryId);
 }
