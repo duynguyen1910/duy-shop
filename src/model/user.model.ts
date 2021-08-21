@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 export type UserRoleType = "user" | "employee" | "admin";
 export type UserInfoType = {
-  id: string;
   email: string;
   password: string;
   fullName: string;

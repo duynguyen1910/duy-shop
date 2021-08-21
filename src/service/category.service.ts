@@ -1,44 +1,30 @@
 import { Category, CategoryType } from "../model";
+import { CategoryRepository } from "../repository";
+
+const categoryRepository = new CategoryRepository(Category);
 
 export function getAllCategory() {
-  return Category.find();
+  return categoryRepository.find();
 }
 
 export function getCategoryBySlug(slug: string) {
-  return Category.findOne({
+  return categoryRepository.findOne({
     slug: slug,
   });
 }
 
-export async function getCategoryByPaginate(page: number, perPage: number) {
-  const total = await Category.count();
-  const categories = await Category.find()
-    .limit(perPage)
-    .skip(perPage * (page - 1));
-  return {
-    data: categories,
-    total: total,
-  };
+export function getCategoryByPaginate(page: number, perPage: number) {
+  return categoryRepository.findByPaginate(page, perPage);
 }
 
 export function addCategory(categoryInfo: CategoryType) {
-  const category = new Category({
-    name: categoryInfo.name,
-    description: categoryInfo.description,
-    icon: categoryInfo.icon
-  });
-  return category.save();
+  return categoryRepository.saveWithSlug(categoryInfo);
 }
 
-export async function updateCategory(
-  categoryId: string,
-  categoryInfo: CategoryType
-) {
-  const category = await Category.findByIdAndUpdate(categoryId, categoryInfo);
-  if (category) return Category.findOne({ _id: categoryId });
-  return undefined;
+export function updateCategory(categoryId: string, categoryInfo: CategoryType) {
+  return categoryRepository.update(categoryId, categoryInfo);
 }
 
 export function deleteCategory(categoryId: string) {
-  return Category.findByIdAndDelete(categoryId);
+  return categoryRepository.delete(categoryId);
 }
