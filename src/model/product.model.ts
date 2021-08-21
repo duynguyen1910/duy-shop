@@ -22,18 +22,4 @@ const ProductSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-interface IProduct extends mongoose.Document {
-    name: string;
-    description: string;
-    category: string;
-    price: number;
-    promotionPrice: number;
-    slug: string;
-}
-
-ProductSchema.pre<IProduct>("save", function (next) {
-    this.slug = slugify(this.name, { lower: true });
-    next();
-});
-
 export const Product = mongoose.model("Product", ProductSchema);

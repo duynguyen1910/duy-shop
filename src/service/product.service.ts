@@ -1,65 +1,49 @@
 import { Product, ProductType } from "../model";
+import { ProductRepository } from "../repository";
+
+const productRepository = new ProductRepository(Product);
 
 export function getAllProduct() {
-    return Product.find();
+  return productRepository.find();
 }
 
 export function getProductBySlug(slug: string) {
-    return Product.findOne({
-        slug: slug,
-    });
+  return productRepository.findOne({
+    slug: slug,
+  });
 }
 
-export async function getProductByPaginate(page: number, perPage: number) {
-    const total = await Product.count();
-    const products = await Product.find()
-        .limit(perPage)
-        .skip(perPage * (page - 1));
-    return {
-        data: products,
-        total: total,
-    };
+export function getProductByPaginate(page: number, perPage: number) {
+  return productRepository.findByPaginate(page, perPage);
 }
 
 export function getProductByCategory(categoryId: string) {
-    return Product.find({
-        category: categoryId,
-    });
+  return productRepository.find({
+    category: categoryId,
+  });
 }
 
-export async function getProductByCategoryPaginate(categoryId: string, page: number, perPage: number) {
-    const total = await Product.count({
-        category: categoryId,
-    });
-    const products = await Product.find()
-        .limit(perPage)
-        .skip(perPage * (page - 1));
-    return {
-        data: products,
-        total: total,
-    };
+export function getProductByCategoryPaginate(
+  categoryId: string,
+  page: number,
+  perPage: number
+) {
+  return productRepository.findByPaginate(page, perPage, {
+    category: categoryId,
+  });
 }
 
-export function addProduct(productInfo: ProductType) {
-    const product = new Product({
-        name: productInfo.name,
-        description: productInfo.description,
-        category: productInfo.category,
-        price: productInfo.price,
-        promotionPrice: productInfo?.promotionPrice,
-    });
-    return product.save();
+export async function addProduct(productInfo: ProductType) {
+  return productRepository.saveWithSlug(productInfo);
 }
 
 export async function updateProduct(
-    productId: string,
-    productInfo: ProductType
+  productId: string,
+  productInfo: ProductType
 ) {
-    const category = await Product.findByIdAndUpdate(productId, productInfo);
-    if (category) return Product.findOne({ _id: productId });
-    return undefined;
+  return productRepository.update(productId, productInfo);
 }
 
 export function deleteProduct(productId: string) {
-    return Product.findByIdAndDelete(productId);
+  return productRepository.delete(productId);
 }
