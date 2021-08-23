@@ -1,3 +1,6 @@
 import { BaseRepository } from "./base.repository";
+import { Token } from "../model";
 
-export class TokenRepository extends BaseRepository {}
+class TokenRepository extends BaseRepository {}
+
+export const tokenRepository = new TokenRepository(Token);

@@ -1,6 +1,7 @@
 import { BaseRepository } from "./base.repository";
+import {Product} from '../model';
 
-export class ProductRepository extends BaseRepository {
+class ProductRepository extends BaseRepository {
   save(data: any) {
     return super.save(data, ["category"]);
   }
@@ -25,3 +26,5 @@ export class ProductRepository extends BaseRepository {
     return super.update(_id, data, ["category"]);
   }
 }
+
+export const productRepository = new ProductRepository(Product);

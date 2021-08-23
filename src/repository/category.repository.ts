@@ -1,3 +1,6 @@
 import { BaseRepository } from "./base.repository";
+import { Category } from "../model";
 
-export class CategoryRepository extends BaseRepository {}
+class CategoryRepository extends BaseRepository {}
+
+export const categoryRepository = new CategoryRepository(Category);

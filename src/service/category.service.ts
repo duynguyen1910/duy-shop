@@ -1,7 +1,5 @@
 import { Category, CategoryType } from "../model";
-import { CategoryRepository } from "../repository";
-
-const categoryRepository = new CategoryRepository(Category);
+import { categoryRepository } from "../repository";
 
 export function getAllCategory() {
   return categoryRepository.find();

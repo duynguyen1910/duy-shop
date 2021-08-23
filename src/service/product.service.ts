@@ -1,7 +1,5 @@
-import { Product, ProductType } from "../model";
-import { ProductRepository } from "../repository";
-
-const productRepository = new ProductRepository(Product);
+import { ProductType } from "../model";
+import { productRepository } from "../repository";
 
 export function getAllProduct() {
   return productRepository.find();

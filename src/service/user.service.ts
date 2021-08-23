@@ -1,10 +1,7 @@
 import md5 from "md5";
-import { SERECT_KEY, User, Token, UserInfoType } from "../model";
+import { SECRET_KEY, UserInfoType } from "../model";
 import jwt from "jsonwebtoken";
-import { UserRepository, TokenRepository } from "../repository";
-
-const userRepository = new UserRepository(User);
-const tokenRepository = new TokenRepository(Token);
+import { userRepository, tokenRepository } from "../repository";
 
 export function register(userInfo: UserInfoType) {
   return userRepository.save({
@@ -24,7 +21,7 @@ export async function login(
   });
   console.log(user);
   if (user) {
-    const token = jwt.sign({ id: user._id }, SERECT_KEY);
+    const token = jwt.sign({ id: user._id }, SECRET_KEY);
     await tokenRepository.save({
       user: user._id,
       token,
