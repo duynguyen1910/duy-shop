@@ -1,4 +1,4 @@
-import * as ProductService from "../service/product.service";
+import { productService } from "../service";
 import { Request, Response } from "express";
 
 class ProductController {
@@ -7,10 +7,13 @@ class ProductController {
       const page = +req.query.page;
       const perpage = +req.query.perpage;
       if (page && perpage) {
-        const products = await ProductService.getProductByPaginate(page, perpage);
+        const products = await productService.getProductByPaginate(
+          page,
+          perpage
+        );
         return res.status(200).json(products);
       }
-      const allProduct = await ProductService.getAllProduct();
+      const allProduct = await productService.getAllProduct();
       return res.status(200).json(allProduct);
     } catch (error) {
       return res.status(500).json({ message: "Error when get products" });
@@ -19,7 +22,7 @@ class ProductController {
 
   async getProductBySlug(req: Request, res: Response) {
     try {
-      const product = await ProductService.getProductBySlug(req.params.slug);
+      const product = await productService.getProductBySlug(req.params.slug);
       if (product) return res.status(200).json(product);
       return res.status(500).json({ message: "Error when get product" });
     } catch (error) {
@@ -33,14 +36,14 @@ class ProductController {
       const perpage = +req.query.perpage;
       const categoryId = req.params.categoryId;
       if (page && perpage) {
-        const products = await ProductService.getProductByCategoryPaginate(
+        const products = await productService.getProductByCategoryPaginate(
           categoryId,
           page,
           perpage
         );
         return res.status(200).json(products);
       }
-      const allProduct = await ProductService.getProductByCategory(categoryId);
+      const allProduct = await productService.getProductByCategory(categoryId);
       return res.status(200).json(allProduct);
     } catch (error) {
       return res.status(500).json({ message: "Error when get products" });
@@ -49,7 +52,7 @@ class ProductController {
 
   async addProduct(req: Request, res: Response) {
     try {
-      const product = await ProductService.addProduct(req.body);
+      const product = await productService.addProduct(req.body);
       if (product) {
         return res.status(200).json(product);
       }
@@ -62,7 +65,7 @@ class ProductController {
   async updateProduct(req: Request, res: Response) {
     const productId = req.params.id;
     try {
-      const product = await ProductService.updateProduct(productId, req.body);
+      const product = await productService.updateProduct(productId, req.body);
       if (product) {
         return res.status(200).json(product);
       }
@@ -74,7 +77,7 @@ class ProductController {
 
   async deleteProduct(req: Request, res: Response) {
     try {
-      const product = await ProductService.deleteProduct(req.params.id);
+      const product = await productService.deleteProduct(req.params.id);
       if (product) {
         return res.status(200).json({ message: "deleted" });
       }
@@ -82,7 +85,7 @@ class ProductController {
     } catch (error) {
       return res.status(500).json({ message: "Error when delete product" });
     }
-  }  
+  }
 }
 
 export const productController = new ProductController();

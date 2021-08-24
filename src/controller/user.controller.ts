@@ -1,11 +1,10 @@
-import * as UserService from "../service";
+import { userService } from "../service";
 import { Request, Response } from "express";
-
 
 class UserController {
   async register(req: Request, res: Response) {
     try {
-      const user = await UserService.register(req.body);
+      const user = await userService.register(req.body);
       if (user) {
         return res.status(200).json({ message: "Register success!" });
       }
@@ -17,7 +16,7 @@ class UserController {
 
   async login(req: Request, res: Response) {
     try {
-      const userSession = await UserService.login(req.body);
+      const userSession = await userService.login(req.body);
       if (userSession) {
         return res.status(200).json(userSession);
       }
@@ -29,13 +28,19 @@ class UserController {
 
   async getUserInfo(req: Request, res: Response) {
     try {
-      const userInfo = await UserService.getUserInfo(req.headers.userId as string);
+      const userInfo = await userService.getUserInfo(
+        req.headers.userId as string
+      );
       if (userInfo) {
         return res.status(200).json(userInfo);
       }
-      return res.status(501).json({message: 'Đã xảy ra lỗi khi lấy thông tin user'});
+      return res
+        .status(501)
+        .json({ message: "Đã xảy ra lỗi khi lấy thông tin user" });
     } catch (error) {
-      return res.status(501).json({message: 'Đã xảy ra lỗi khi lấy thông tin user'});
+      return res
+        .status(501)
+        .json({ message: "Đã xảy ra lỗi khi lấy thông tin user" });
     }
   }
 }

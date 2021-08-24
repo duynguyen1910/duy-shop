@@ -1,28 +1,32 @@
 import { Category, CategoryType } from "../model";
 import { categoryRepository } from "../repository";
 
-export function getAllCategory() {
-  return categoryRepository.find();
+class CategoryService {
+  getAllCategory() {
+    return categoryRepository.find();
+  }
+
+  getCategoryBySlug(slug: string) {
+    return categoryRepository.findOne({
+      slug,
+    });
+  }
+
+  getCategoryByPaginate(page: number, perPage: number) {
+    return categoryRepository.findByPaginate(page, perPage);
+  }
+
+  addCategory(categoryInfo: CategoryType) {
+    return categoryRepository.saveWithSlug(categoryInfo);
+  }
+
+  updateCategory(categoryId: string, categoryInfo: CategoryType) {
+    return categoryRepository.update(categoryId, categoryInfo);
+  }
+
+  deleteCategory(categoryId: string) {
+    return categoryRepository.delete(categoryId);
+  }
 }
 
-export function getCategoryBySlug(slug: string) {
-  return categoryRepository.findOne({
-    slug,
-  });
-}
-
-export function getCategoryByPaginate(page: number, perPage: number) {
-  return categoryRepository.findByPaginate(page, perPage);
-}
-
-export function addCategory(categoryInfo: CategoryType) {
-  return categoryRepository.saveWithSlug(categoryInfo);
-}
-
-export function updateCategory(categoryId: string, categoryInfo: CategoryType) {
-  return categoryRepository.update(categoryId, categoryInfo);
-}
-
-export function deleteCategory(categoryId: string) {
-  return categoryRepository.delete(categoryId);
-}
+export const categoryService = new CategoryService();

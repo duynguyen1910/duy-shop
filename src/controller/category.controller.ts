@@ -1,4 +1,4 @@
-import * as CategoryService from "../service/category.service";
+import {categoryService} from "../service";
 import { Request, Response } from "express";
 
 class CategoryController {
@@ -7,13 +7,13 @@ class CategoryController {
       const page = +req.query.page;
       const perpage = +req.query.perpage;
       if (page && perpage) {
-        const categories = await CategoryService.getCategoryByPaginate(
+        const categories = await categoryService.getCategoryByPaginate(
           page,
           perpage
         );
         return res.status(200).json(categories);
       }
-      const allCategory = await CategoryService.getAllCategory();
+      const allCategory = await categoryService.getAllCategory();
       return res.status(200).json(allCategory);
     } catch (error) {
       return res.status(500).json({ message: "Error when get categories" });
@@ -22,7 +22,7 @@ class CategoryController {
 
   async getCategoryBySlug(req: Request, res: Response) {
     try {
-      const category = await CategoryService.getCategoryBySlug(req.params.slug);
+      const category = await categoryService.getCategoryBySlug(req.params.slug);
       if (category) return res.status(200).json(category);
       return res.status(500).json({ message: "Error when get category" });
     } catch (error) {
@@ -32,7 +32,7 @@ class CategoryController {
 
   async addCategory(req: Request, res: Response) {
     try {
-      const category = await CategoryService.addCategory(req.body);
+      const category = await categoryService.addCategory(req.body);
       if (category) {
         return res.status(200).json(category);
       }
@@ -45,7 +45,7 @@ class CategoryController {
   async updateCategory(req: Request, res: Response) {
     const categoryId = req.params.id;
     try {
-      const category = await CategoryService.updateCategory(
+      const category = await categoryService.updateCategory(
         categoryId,
         req.body
       );
@@ -60,7 +60,7 @@ class CategoryController {
 
   async deleteCategory(req: Request, res: Response) {
     try {
-      const category = await CategoryService.deleteCategory(req.params.id);
+      const category = await categoryService.deleteCategory(req.params.id);
       if (category) {
         return res.status(200).json({ message: "deleted" });
       }
