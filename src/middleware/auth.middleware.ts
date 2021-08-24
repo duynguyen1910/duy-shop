@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { tokenRepository } from "../repository";
-import * as UserService from "../service/user.service";
+import { userService } from "../service";
 
 export async function authMiddleware(
   req: Request,
@@ -16,7 +16,7 @@ export async function authMiddleware(
       return res.status(401).json({ message: "Phiên đăng nhập không hợp lệ" });
     if (tokenResult && tokenResult.expiry < new Date())
       return res.status(401).json({ message: "Phiên hết hạn" });
-    const userInfo = await UserService.getUserInfo(tokenResult.user);
+    const userInfo = await userService.getUserInfo(tokenResult.user);
     req.headers.userId = userInfo._id;
     req.headers.role = userInfo.role;
     return next();
