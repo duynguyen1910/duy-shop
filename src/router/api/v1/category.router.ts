@@ -1,12 +1,12 @@
 import { Router } from "express";
-import * as CategoryController from "../../../controller/category.controller";
+import { categoryController } from "../../../controller";
 
 const categoryRouter = Router();
 
-categoryRouter.get("/category", CategoryController.getAllCategory);
-categoryRouter.get("/category/:slug", CategoryController.getCategoryBySlug);
-categoryRouter.post("/category", CategoryController.addCategory);
-categoryRouter.put("/category/:id", CategoryController.updateCategory);
-categoryRouter.delete("/category/:id", CategoryController.deleteCategory);
+categoryRouter.get("/category", categoryController.getAllCategory);
+categoryRouter.get("/category/:slug", categoryController.getCategoryBySlug);
+categoryRouter.post("/category", categoryController.addCategory);
+categoryRouter.put("/category/:id", categoryController.updateCategory);
+categoryRouter.delete("/category/:id", categoryController.deleteCategory);
 
 export { categoryRouter };

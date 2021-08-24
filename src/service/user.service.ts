@@ -1,7 +1,8 @@
 import md5 from "md5";
-import { SECRET_KEY, UserInfoType } from "../model";
+import { UserInfoType } from "../model";
 import jwt from "jsonwebtoken";
 import { userRepository, tokenRepository } from "../repository";
+import { config } from "../config";
 
 export function register(userInfo: UserInfoType) {
   return userRepository.save({
@@ -19,9 +20,8 @@ export async function login(
     email: userInfo.email,
     password: md5(userInfo.password),
   });
-  console.log(user);
   if (user) {
-    const token = jwt.sign({ id: user._id }, SECRET_KEY);
+    const token = jwt.sign({ id: user._id }, config.jwtSecrettKey);
     await tokenRepository.save({
       user: user._id,
       token,
@@ -35,4 +35,8 @@ export async function login(
     };
   }
   return undefined;
+}
+
+export function getUserInfo(userId: string) {
+  return userRepository.findOne({ _id: userId });
 }

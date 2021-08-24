@@ -1,16 +1,16 @@
 import { Router } from "express";
-import * as ProductController from "../../../controller/product.controller";
+import { productController } from "../../../controller";
 
 const productRouter = Router();
 
-productRouter.get("/product", ProductController.getAllProduct);
-productRouter.get("/product/:slug", ProductController.getProductBySlug);
-productRouter.post("/product", ProductController.addProduct);
-productRouter.put("/product/:id", ProductController.updateProduct);
-productRouter.delete("/product/:id", ProductController.deleteProduct);
+productRouter.get("/product", productController.getAllProduct);
+productRouter.get("/product/:slug", productController.getProductBySlug);
+productRouter.post("/product", productController.addProduct);
+productRouter.put("/product/:id", productController.updateProduct);
+productRouter.delete("/product/:id", productController.deleteProduct);
 productRouter.get(
   "/product-by-category/:categoryId",
-  ProductController.getProductByCategory
+  productController.getProductByCategory
 );
 
 export { productRouter };

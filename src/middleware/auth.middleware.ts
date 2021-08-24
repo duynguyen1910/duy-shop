@@ -1,5 +1,6 @@
-import { Token } from "../model";
 import { Request, Response, NextFunction } from "express";
+import { tokenRepository } from "../repository";
+import * as UserService from "../service/user.service";
 
 export async function authMiddleware(
   req: Request,
@@ -10,12 +11,14 @@ export async function authMiddleware(
     const { token } = req;
     if (!token)
       return res.status(401).json({ message: "Bạn cần phải đăng nhập" });
-    const tokenResult = await Token.findOne({ token: token });
-    if (!tokenResult)   
+    const tokenResult = await tokenRepository.findOne({ token });
+    if (!tokenResult)
       return res.status(401).json({ message: "Phiên đăng nhập không hợp lệ" });
     if (tokenResult && tokenResult.expiry < new Date())
       return res.status(401).json({ message: "Phiên hết hạn" });
-    req.body.userId = tokenResult.user;
+    const userInfo = await UserService.getUserInfo(tokenResult.user);
+    req.headers.userId = userInfo._id;
+    req.headers.role = userInfo.role;
     return next();
   } catch (error) {
     console.log("add todo error", error);

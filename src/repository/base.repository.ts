@@ -56,7 +56,7 @@ export class BaseRepository {
         .skip(perPage * (page - 1));
       return {
         data: result,
-        total: total,
+        total,
       };
     }
 
@@ -67,7 +67,7 @@ export class BaseRepository {
     rs = await rs.limit(perPage).skip(perPage * (page - 1));
     return {
       data: rs,
-      total: total,
+      total,
     };
   }
 

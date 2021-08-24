@@ -7,7 +7,7 @@ export function getAllCategory() {
 
 export function getCategoryBySlug(slug: string) {
   return categoryRepository.findOne({
-    slug: slug,
+    slug,
   });
 }
 

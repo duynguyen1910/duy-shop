@@ -18,5 +18,4 @@ const AccountSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const SECRET_KEY = "secret_key";
 export const User = mongoose.model("MembersAccount", AccountSchema);

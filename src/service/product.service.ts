@@ -7,7 +7,7 @@ export function getAllProduct() {
 
 export function getProductBySlug(slug: string) {
   return productRepository.findOne({
-    slug: slug,
+    slug,
   });
 }
 
