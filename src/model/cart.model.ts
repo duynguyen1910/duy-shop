@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
+export type CartStatus = "draft" | "booked";
+
 export type CartType = {
   product: string;
   amount: number;
   creator: string;
-  status: "draft" | "booked";
+  status: CartStatus;
 };
 
 const CartSchema = new mongoose.Schema(
