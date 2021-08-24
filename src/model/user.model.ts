@@ -8,7 +8,7 @@ export type UserInfoType = {
   role: UserRoleType;
 };
 
-const AccountSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -18,4 +18,4 @@ const AccountSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const User = mongoose.model("MembersAccount", AccountSchema);
+export const User = mongoose.model("User", UserSchema);
