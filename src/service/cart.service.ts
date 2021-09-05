@@ -3,7 +3,11 @@ import { CartType } from "../model";
 
 class CartService {
   getCart(userId: string) {
-    return cartRepository.find({ creator: userId });
+    return cartRepository.find({ creator: userId, status: "draft" });
+  }
+
+  getCartById(cartId: string) {
+    return cartRepository.findOne({ _id: cartId, status: "draft" });
   }
 
   addToCart(data: CartType) {
@@ -11,6 +15,10 @@ class CartService {
       ...data,
       status: "draft",
     });
+  }
+
+  updateCart(cartId: string, data: Partial<CartType>) {
+    return cartRepository.update(cartId, data);
   }
 
   removeCard(cartId: string) {

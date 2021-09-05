@@ -63,9 +63,8 @@ class ProductController {
   }
 
   async updateProduct(req: Request, res: Response) {
-    const productId = req.params.id;
     try {
-      const product = await productService.updateProduct(productId, req.body);
+      const product = await productService.updateProduct(req.params.id, req.body);
       if (product) {
         return res.status(200).json(product);
       }
