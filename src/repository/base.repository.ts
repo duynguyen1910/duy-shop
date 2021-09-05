@@ -75,7 +75,6 @@ export class BaseRepository {
     const result = await this.collection.findByIdAndUpdate(_id, data);
     if (result) {
       const rs = this.findOne({ _id }, populate);
-      console.log(rs);
       return rs;
     }
     return undefined;
