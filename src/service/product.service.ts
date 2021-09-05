@@ -36,10 +36,7 @@ class ProductService {
     return productRepository.saveWithSlug(productInfo);
   }
 
-  updateProduct(
-    productId: string,
-    productInfo: ProductType
-  ) {
+  updateProduct(productId: string, productInfo: ProductType) {
     return productRepository.update(productId, productInfo);
   }
 
