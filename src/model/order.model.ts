@@ -14,7 +14,6 @@ const OrderItemSchema = new mongoose.Schema({
 
 const OrderSchema = new mongoose.Schema(
   {
-    //[{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }]
     product: [OrderItemSchema],
     creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     status: { type: String },
